@@ -1,4 +1,4 @@
-pub enum JsonValue{
+pub enum JsonValue {
     Null,
     Bool(bool),
     Number(f64),
