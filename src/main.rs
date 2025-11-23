@@ -16,18 +16,23 @@ fn main() {
             "city": "Anytown"
         }
     }"#;
-       let mut lexer = Lexer::new(input);
+    let mut lexer = Lexer::new(input);
 
     println!("Input: {}", input);
     println!("Tokens:");
 
-    for tok in lexer {
-        match tok {
-            Ok(t) => println!("  {:?}", t),
-            Err(e) => {
-                println!("Lexer error: {}", e);
-                break;
-            }
+    match parse(input) {
+        Ok(json_value) => {
+            println!("\n--- Parsed successfully! (AST) ---");
+            println!("{:?}", json_value);
+
+            // 3. Test the Serializer (Round-Trip Test)
+            let output_json = json_value.to_string();
+            println!("\n--- Serialized output ---");
+            println!("{}", output_json);
+        }
+        Err(e) => {
+            eprintln!("\nPARSING FAILED: {:?}", e);
         }
     }
 }
